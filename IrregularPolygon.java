@@ -16,39 +16,47 @@ public class IrregularPolygon
     //public methods
     public void add(Point2D.Double aPoint) 
     {
-        
-        
+
     }
 
-    public void draw() {}
+    public void draw() 
+    {
+        SketchPad myPaper= new SketchPad (500,500);
+        DrawingTool myPencil = new DrawingTool (myPaper);
+        for (int i = 0; i < myPolygon.size(); i++)
+        {
+            myPencil.move(myPolygon.get(i).getX(), myPolygon.get(i).getY());
+        }
+    }
 
     public double perimter () 
     {
-        for (Point2D.Double p : myPolygon)
+        int val = 0;
+        for (int i = 0; i< myPolygon.size(); i++)
         {
-             
+            val += (myPolygon.get(i).distance(myPolygon.get(i++)));
         }
+        val += (myPolygon.get(myPolygon.size()).distance(myPolygon.get(0)));
+
+        return val;
     }
 
     public double area ()
     {
-        int val = 0;
-        int n = 0;
-        int w = 1;
-        for (Point2D.Double p : myPolygon)
+        int val1 = 0;
+        for (int i = 0; i < myPolygon.size(); i++)
         {
-            val += Math.abs(pn.getx()+pw.gety());
-            n++;
-            w++;
+            val1+= myPolygon.get(i).getX()*myPolygon.get(i++).getY();
         }
+        val1 += myPolygon.get(myPolygon.size()).getX()*myPolygon.get(0).getY();
         int val2 = 0;
-        for (Point2D.Double p : myPolygon)
+        for (int i = 0; i < myPolygon.size(); i++)
         {
-            val2 += Math.abs(pn.gety()-pw.getx());
-            n++;
-            w++;
+            val2 += myPolygon.get(i).getY()*myPolygon.get(i++).getX();
         }
-        return (val-val2);
+        val2 += myPolygon.get(myPolygon.size()).getY()*myPolygon.get(0).getX();
+
+        return val1 - val2;
     }
 
 }
