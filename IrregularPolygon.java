@@ -10,53 +10,85 @@ import gpdraw.*;                // for DrawingTool
 public class IrregularPolygon
 {
     private ArrayList <Point2D.Double> myPolygon;
-
+    private SketchPad canvas;
+    private DrawingTool pencil;
     //constructors
-    public IrregularPolygon () {}
+    public IrregularPolygon () 
+    {
+        canvas = new SketchPad(600,600);
+        pencil = new DrawingTool(canvas);
+        myPolygon = new ArrayList<Point2D.Double>();
+    }
     //public methods
     public void add(Point2D.Double aPoint) 
     {
-
+        myPolygon.add(aPoint);
     }
 
     public void draw() 
     {
-        SketchPad myPaper= new SketchPad (500,500);
-        DrawingTool myPencil = new DrawingTool (myPaper);
-        for (int i = 0; i < myPolygon.size(); i++)
+        ArrayList<Point2D.Double>myDraw;
+        myDraw = myPolygon;
+
+        double cx = 0;
+        double cy = 0;
+        for (int i = 1; i< myDraw.size(); i++)
         {
-            myPencil.move(myPolygon.get(i).getX(), myPolygon.get(i).getY());
+            cx = myDraw.get(i).getX();
+            cy = myDraw.get(i).getY();
+            pencil.move(cx,cy);
         }
+        pencil.move(myDraw.get(0).getX(),myDraw.get(0).getY());
+
     }
 
-    public double perimter () 
+    public double perimeter () 
     {
         int val = 0;
-        for (int i = 0; i< myPolygon.size(); i++)
+        if (myPolygon.size()<=2)
         {
-            val += (myPolygon.get(i).distance(myPolygon.get(i++)));
+            return val;
         }
-        val += (myPolygon.get(myPolygon.size()).distance(myPolygon.get(0)));
+        else 
+        {
+            for (int i = 0; i< myPolygon.size()-1; i++)
+            {
+                val += (myPolygon.get(i).distance(myPolygon.get(i+1)));
+            }
+            val += (myPolygon.get(myPolygon.size()-1).distance(myPolygon.get(0)));
 
-        return val;
+            return val;
+        }
     }
 
     public double area ()
     {
-        int val1 = 0;
-        for (int i = 0; i < myPolygon.size(); i++)
+        double val = 0.0;
+        if (myPolygon.size()<=2)
         {
-            val1+= myPolygon.get(i).getX()*myPolygon.get(i++).getY();
+            return val;
         }
-        val1 += myPolygon.get(myPolygon.size()).getX()*myPolygon.get(0).getY();
-        int val2 = 0;
-        for (int i = 0; i < myPolygon.size(); i++)
+        else
         {
-            val2 += myPolygon.get(i).getY()*myPolygon.get(i++).getX();
+            double val1 = 0.0;
+            for (int i = 0; i < myPolygon.size()-1; i++)
+            {
+                val1+= myPolygon.get(i).getX()*myPolygon.get(i+1).getY();
+            }
+            val1 += myPolygon.get(myPolygon.size()-1).getX()*myPolygon.get(0).getY();
+            double val2 = 0.0;
+            for (int i = 0; i < myPolygon.size()-1; i++)
+            {
+                val2 += myPolygon.get(i).getY()*myPolygon.get(i+1).getX();
+            }
+            val2 += myPolygon.get(myPolygon.size()-1).getY()*myPolygon.get(0).getX();
+            
+            return Math.abs((val1-val2)*.5);
         }
-        val2 += myPolygon.get(myPolygon.size()).getY()*myPolygon.get(0).getX();
-
-        return val1 - val2;
     }
 
+    public String getName()
+    {
+        return "Krista";
+    }
 }
