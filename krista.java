@@ -7,13 +7,13 @@ import gpdraw.*;                // for DrawingTool
  * @author (kwest)
  * @version (12/10/17)
  */
-public class IrregularPolygon
+public class krista implements Polygon
 {
     private ArrayList <Point2D.Double> myPolygon;
     private SketchPad canvas;
     private DrawingTool pencil;
     //constructors
-    public IrregularPolygon () 
+    public krista () 
     {
         canvas = new SketchPad(600,600);
         pencil = new DrawingTool(canvas);
